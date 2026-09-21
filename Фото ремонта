@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Фотографии ремонта</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #172033;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 34px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .status {
+      margin-top: 30px;
+      padding: 16px;
+      border-left: 5px solid #16a34a;
+      border-radius: 8px;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: bold;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Фотографии ремонта</h1>
+
+    <p>
+      Здесь будет приложение для хранения фотографий,
+      гаражных номеров и информации о выполненных работах.
+    </p>
+
+    <button class="button" type="button" onclick="showMessage()">
+      Проверить работу сайта
+    </button>
+
+    <div class="status" id="status">
+      Сайт успешно открыт.
+    </div>
+  </main>
+
+  <script>
+    function showMessage() {
+      document.getElementById("status").textContent =
+        "JavaScript работает. Сайт готов к дальнейшей настройке.";
+    }
+  </script>
+</body>
+</html>
