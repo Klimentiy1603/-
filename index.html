@@ -1,1 +1,140 @@
 
+Skip to content
+Klimentiy1603
+-
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security and quality
+Insights
+Settings
+Commit 37ff44c
+Klimentiy1603
+Klimentiy1603
+authored
+2 hours ago
+·
+·
+Verified
+Create README.md
+main
+1 parent 
+3fdaba9
+ commit 
+37ff44c
+1 file changed
+
++103
+Lines changed: 103 additions & 0 deletions
+File tree
+Filter files…
+README.md
+Search within code
+ 
+‎README.md‎
++103
+Lines changed: 103 additions & 0 deletions
+
+
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Фотографии ремонта</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+    }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 32px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin-top: 0;
+      color: #111827;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .status {
+      margin-top: 24px;
+      padding: 16px;
+      color: #166534;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 10px;
+      color: white;
+      background: #2563eb;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Фотографии ремонта</h1>
+    <p>
+      Здесь будет приложение для загрузки и хранения
+      фотографий выполненных ремонтных работ.
+    </p>
+    <p>
+      В дальнейшем на этой странице появятся номер гаража,
+      выбор фотографий, комментарий и история ремонтов.
+    </p>
+    <button id="checkButton" type="button">
+      Проверить работу сайта
+    </button>
+    <div class="status" id="status">
+      Страница успешно загружена.
+    </div>
+  </main>
+  <script>
+    const button = document.getElementById("checkButton");
+    const status = document.getElementById("status");
+    button.addEventListener("click", function () {
+      status.textContent =
+        "JavaScript работает. Сайт готов к дальнейшей настройке.";
+    });
+  </script>
+</body>
+</html>
+0 commit comments
+Comments
+0
+ (0)
+Comment
+You're not receiving notifications from this thread.
+
+ 
