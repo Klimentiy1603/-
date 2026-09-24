@@ -1,10 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Фотографии ремонта</title>
+  <title>Garage Repair</title>
 
   <style>
     * {
@@ -14,88 +17,546 @@
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 24px;
       font-family: Arial, sans-serif;
-      color: #1f2937;
-      background: #f3f4f6;
+      color: #f5f5f5;
+      background:
+        radial-gradient(circle at top, #293241 0, #10151c 48%, #080a0d 100%);
     }
 
-    .container {
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(100% - 32px, 980px);
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    .header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 6vw, 52px);
+    }
+
+    .header p {
+      margin: 0;
+      color: #aeb8c4;
+    }
+
+    .card {
+      width: min(100%, 480px);
+      margin: 0 auto;
+      padding: 28px;
+      border: 1px solid #303946;
+      border-radius: 20px;
+      background: rgba(22, 28, 36, 0.96);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+    }
+
+    .description {
+      margin: 0 0 24px;
+      color: #aeb8c4;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #dce3eb;
+      font-size: 14px;
+    }
+
+    .field input {
       width: 100%;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 32px;
-      background: #ffffff;
-      border-radius: 18px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+      padding: 13px 14px;
+      color: #ffffff;
+      border: 1px solid #414d5c;
+      border-radius: 10px;
+      outline: none;
+      background: #0d1218;
     }
 
-    h1 {
+    .field input:focus {
+      border-color: #5ba8ff;
+      box-shadow: 0 0 0 3px rgba(91, 168, 255, 0.15);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .button {
+      min-height: 46px;
+      padding: 11px 16px;
+      color: #ffffff;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button:disabled {
+      cursor: wait;
+      opacity: 0.55;
+      transform: none;
+    }
+
+    .button-primary {
+      background: #1473e6;
+    }
+
+    .button-secondary {
+      background: #3c4654;
+    }
+
+    .button-danger {
+      background: #b33636;
+    }
+
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      line-height: 1.45;
+    }
+
+    .message.success {
+      display: block;
+      color: #bcf7ce;
+      border: 1px solid #337b4a;
+      background: rgba(42, 116, 66, 0.24);
+    }
+
+    .message.error {
+      display: block;
+      color: #ffc5c5;
+      border: 1px solid #8f4141;
+      background: rgba(138, 45, 45, 0.25);
+    }
+
+    .message.info {
+      display: block;
+      color: #cde4ff;
+      border: 1px solid #39658f;
+      background: rgba(44, 97, 148, 0.25);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .user-email {
+      margin: 18px 0;
+      padding: 12px;
+      border-radius: 10px;
+      color: #cde4ff;
+      background: #0d1218;
+      word-break: break-word;
+    }
+
+    .content-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #35404c;
+      border-radius: 14px;
+      background: #11171e;
+    }
+
+    .content-box h3 {
       margin-top: 0;
-      color: #111827;
     }
 
-    p {
+    .content-box p {
+      margin-bottom: 0;
+      color: #b9c3ce;
       line-height: 1.6;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 13px 20px;
-      border: 0;
-      border-radius: 10px;
-      color: #ffffff;
-      background: #2563eb;
-      font-size: 16px;
-      cursor: pointer;
-    }
+    @media (max-width: 520px) {
+      .page {
+        padding: 24px 0;
+      }
 
-    button:hover {
-      background: #1d4ed8;
-    }
+      .card {
+        padding: 21px;
+      }
 
-    .status {
-      margin-top: 24px;
-      padding: 16px;
-      color: #166534;
-      background: #dcfce7;
-      border: 1px solid #86efac;
-      border-radius: 10px;
+      .buttons {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <h1>Фотографии ремонта</h1>
+  <main class="page">
+    <header class="header">
+      <h1>Garage Repair</h1>
+      <p>Личный кабинет сервиса</p>
+    </header>
 
-    <p>
-      Здесь будет приложение для загрузки и хранения
-      фотографий выполненных ремонтных работ.
-    </p>
+    <!-- Форма регистрации и входа -->
+    <section id="authSection" class="card">
+      <h2>Вход в систему</h2>
 
-    <p>
-      В дальнейшем на этой странице появятся номер гаража,
-      выбор фотографий, комментарий и история ремонтов.
-    </p>
+      <p class="description">
+        Введите электронную почту и пароль. Если аккаунта ещё нет,
+        нажмите «Регистрация».
+      </p>
 
-    <button id="checkButton" type="button">
-      Проверить работу сайта
-    </button>
+      <form id="authForm">
+        <div class="field">
+          <label for="email">Электронная почта</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="name@example.com"
+            required
+          >
+        </div>
 
-    <div class="status" id="status">
-      Страница успешно загружена.
-    </div>
+        <div class="field">
+          <label for="password">Пароль</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Минимум 6 символов"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <div class="buttons">
+          <button
+            id="loginButton"
+            class="button button-primary"
+            type="submit"
+          >
+            Войти
+          </button>
+
+          <button
+            id="registerButton"
+            class="button button-secondary"
+            type="button"
+          >
+            Регистрация
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="authMessage"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </section>
+
+    <!-- Закрытая часть сайта -->
+    <section id="privateSection" class="card hidden">
+      <h2>Личный кабинет</h2>
+
+      <p class="description">
+        Вы успешно авторизовались.
+      </p>
+
+      <div class="user-email">
+        Пользователь: <strong id="currentUserEmail"></strong>
+      </div>
+
+      <div class="content-box">
+        <h3>Garage Repair</h3>
+
+        <p>
+          Здесь можно разместить форму создания заявки на ремонт,
+          список автомобилей, фотографии повреждений и историю обращений.
+          Эта часть страницы доступна только после входа.
+        </p>
+      </div>
+
+      <div class="buttons">
+        <button
+          id="checkButton"
+          class="button button-primary"
+          type="button"
+        >
+          Проверить работу сайта
+        </button>
+
+        <button
+          id="logoutButton"
+          class="button button-danger"
+          type="button"
+        >
+          Выйти
+        </button>
+      </div>
+
+      <div
+        id="privateMessage"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </section>
   </main>
 
-  <script>
-    const button = document.getElementById("checkButton");
-    const status = document.getElementById("status");
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
-    button.addEventListener("click", function () {
-      status.textContent =
-        "JavaScript работает. Сайт готов к дальнейшей настройке.";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from
+      "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOCbiLdZLTl89e02LIV1yPV7SH7Etc5oU",
+      authDomain: "foto-9e9ad.firebaseapp.com",
+      projectId: "foto-9e9ad",
+      storageBucket: "foto-9e9ad.firebasestorage.app",
+      messagingSenderId: "331591013787",
+      appId: "1:331591013787:web:564b7bc12ef77d30077d3e",
+      measurementId: "G-QT28JW6QL2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const authSection = document.getElementById("authSection");
+    const privateSection = document.getElementById("privateSection");
+    const authForm = document.getElementById("authForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
+    const logoutButton = document.getElementById("logoutButton");
+    const checkButton = document.getElementById("checkButton");
+    const authMessage = document.getElementById("authMessage");
+    const privateMessage = document.getElementById("privateMessage");
+    const currentUserEmail =
+      document.getElementById("currentUserEmail");
+
+    function showMessage(element, text, type = "info") {
+      element.textContent = text;
+      element.className = `message ${type}`;
+    }
+
+    function clearMessage(element) {
+      element.textContent = "";
+      element.className = "message";
+    }
+
+    function setLoading(isLoading) {
+      loginButton.disabled = isLoading;
+      registerButton.disabled = isLoading;
+      emailInput.disabled = isLoading;
+      passwordInput.disabled = isLoading;
+    }
+
+    function getErrorMessage(error) {
+      const messages = {
+        "auth/invalid-email":
+          "Проверьте правильность электронной почты.",
+
+        "auth/missing-password":
+          "Введите пароль.",
+
+        "auth/weak-password":
+          "Пароль должен содержать не менее 6 символов.",
+
+        "auth/email-already-in-use":
+          "Аккаунт с такой электронной почтой уже существует.",
+
+        "auth/invalid-credential":
+          "Неверная электронная почта или пароль.",
+
+        "auth/user-not-found":
+          "Пользователь с такими данными не найден.",
+
+        "auth/wrong-password":
+          "Введён неправильный пароль.",
+
+        "auth/too-many-requests":
+          "Слишком много попыток. Повторите позднее.",
+
+        "auth/network-request-failed":
+          "Ошибка сети. Проверьте подключение к интернету.",
+
+        "auth/operation-not-allowed":
+          "Вход по электронной почте не включён в Firebase.",
+
+        "auth/unauthorized-domain":
+          "Домен сайта не добавлен в разрешённые домены Firebase."
+      };
+
+      return messages[error.code] ||
+        `Ошибка Firebase: ${error.message}`;
+    }
+
+    authForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage(authMessage);
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showMessage(
+          authMessage,
+          "Введите электронную почту и пароль.",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      } catch (error) {
+        console.error(error);
+
+        showMessage(
+          authMessage,
+          getErrorMessage(error),
+          "error"
+        );
+      } finally {
+        setLoading(false);
+      }
     });
+
+    registerButton.addEventListener("click", async () => {
+      clearMessage(authMessage);
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email) {
+        showMessage(
+          authMessage,
+          "Введите электронную почту.",
+          "error"
+        );
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage(
+          authMessage,
+          "Пароль должен содержать не менее 6 символов.",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        showMessage(
+          privateMessage,
+          "Аккаунт успешно создан.",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+
+        showMessage(
+          authMessage,
+          getErrorMessage(error),
+          "error"
+        );
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      try {
+        logoutButton.disabled = true;
+        await signOut(auth);
+      } catch (error) {
+        console.error(error);
+
+        showMessage(
+          privateMessage,
+          getErrorMessage(error),
+          "error"
+        );
+      } finally {
+        logoutButton.disabled = false;
+      }
+    });
+
+    checkButton.addEventListener("click", () => {
+      showMessage(
+        privateMessage,
+        "Сайт и JavaScript работают. Firebase подключён.",
+        "success"
+      );
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authSection.classList.add("hidden");
+        privateSection.classList.remove("hidden");
+        currentUserEmail.textContent = user.email || "без адреса";
+        authForm.reset();
+        clearMessage(authMessage);
+      } else {
+        privateSection.classList.add("hidden");
+        authSection.classList.remove("hidden");
+        currentUserEmail.textContent = "";
+        clearMessage(privateMessage);
+      }
+    });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
