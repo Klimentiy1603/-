@@ -17,6 +17,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -28,7 +32,7 @@
 
     .container {
       width: 100%;
-      max-width: 680px;
+      max-width: 700px;
       margin: 25px auto;
       padding: 28px;
       background: #ffffff;
@@ -41,22 +45,37 @@
       font-size: 30px;
     }
 
+    h2 {
+      margin: 0 0 18px;
+      font-size: 23px;
+    }
+
     .description {
       margin: 0 0 25px;
       color: #5b6475;
       line-height: 1.5;
     }
 
-    .field {
-      margin-bottom: 22px;
+    .auth-card {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #dbe1ea;
+      border-radius: 14px;
+      background: #f8fafc;
     }
 
-    label.field-label {
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field-label {
       display: block;
       margin-bottom: 8px;
       font-weight: 700;
     }
 
+    input[type="email"],
+    input[type="password"],
     input[type="text"] {
       display: block;
       width: 100%;
@@ -64,19 +83,108 @@
       padding: 12px 15px;
       border: 2px solid #d7dce5;
       border-radius: 10px;
-      font-size: 22px;
-      letter-spacing: 5px;
+      background: #ffffff;
+      color: #172033;
+      font-size: 17px;
       outline: none;
     }
 
+    input[type="email"]:focus,
+    input[type="password"]:focus,
     input[type="text"]:focus {
       border-color: #2563eb;
+    }
+
+    input[type="text"] {
+      font-size: 22px;
+      letter-spacing: 5px;
+    }
+
+    input:disabled {
+      background: #f3f4f6;
+      cursor: not-allowed;
     }
 
     .hint {
       margin-top: 7px;
       color: #6b7280;
       font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button,
+    .file-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .primary-button {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .secondary-button {
+      border: 2px solid #2563eb;
+      background: #ffffff;
+      color: #1d4ed8;
+    }
+
+    .logout-button {
+      width: auto;
+      min-height: 42px;
+      padding: 9px 16px;
+      background: #e5e7eb;
+      color: #172033;
+      font-size: 14px;
+    }
+
+    .zip-button {
+      margin-top: 12px;
+      background: #15803d;
+      color: #ffffff;
+    }
+
+    button:disabled,
+    .file-button.disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .file-button.disabled {
+      pointer-events: none;
+    }
+
+    .user-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #e0f2fe;
+    }
+
+    .user-email {
+      overflow-wrap: anywhere;
+      color: #075985;
+      font-weight: 700;
     }
 
     .file-buttons {
@@ -93,44 +201,10 @@
       pointer-events: none;
     }
 
-    .file-button,
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 52px;
-      padding: 12px 16px;
-      border: 0;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      text-align: center;
-      cursor: pointer;
-    }
-
     .file-button {
       border: 2px solid #2563eb;
       background: #eff6ff;
       color: #1d4ed8;
-    }
-
-    .primary-button {
-      margin-top: 18px;
-      background: #2563eb;
-      color: #ffffff;
-    }
-
-    .zip-button {
-      margin-top: 12px;
-      background: #15803d;
-      color: #ffffff;
-    }
-
-    button:disabled,
-    .file-button.disabled {
-      cursor: not-allowed;
-      opacity: 0.55;
     }
 
     .selected-files {
@@ -153,11 +227,12 @@
     }
 
     .status {
-      margin-top: 20px;
+      margin-top: 16px;
       padding: 14px;
       border-radius: 10px;
       background: #eef2f7;
       line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .status.success {
@@ -181,7 +256,7 @@
       background: #e5e7eb;
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       body {
         padding: 12px;
       }
@@ -195,8 +270,18 @@
         font-size: 25px;
       }
 
+      .button-row,
       .file-buttons {
         grid-template-columns: 1fr;
+      }
+
+      .user-panel {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .logout-button {
+        width: 100%;
       }
     }
   </style>
@@ -207,86 +292,174 @@
     <h1>Фотографии ремонта</h1>
 
     <p class="description">
-      Введите шестизначный гаражный номер, выберите фотографии
-      и загрузите их. Все фотографии указанного номера можно
-      скачать одним ZIP-файлом.
+      Зарегистрируйтесь или войдите в учётную запись. После входа
+      можно загружать фотографии ремонта по шестизначному гаражному
+      номеру и скачивать их одним ZIP-архивом.
     </p>
 
-    <div class="field">
-      <label class="field-label" for="garageNumber">
-        Гаражный номер
-      </label>
+    <section class="auth-card">
+      <form id="authForm">
+        <h2>Вход или регистрация</h2>
 
-      <input
-        id="garageNumber"
-        type="text"
-        inputmode="numeric"
-        pattern="[0-9]{6}"
-        maxlength="6"
-        autocomplete="off"
-        placeholder="000000"
-      >
+        <div class="field">
+          <label class="field-label" for="email">
+            Электронная почта
+          </label>
 
-      <div class="hint">
-        Необходимо ввести ровно 6 цифр. Например: 012345.
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="example@mail.ru"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="password">
+            Пароль
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            minlength="6"
+            placeholder="Не менее 6 символов"
+            required
+          >
+
+          <div class="hint">
+            Для регистрации пароль должен содержать не менее 6 символов.
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button
+            id="loginButton"
+            class="primary-button"
+            type="submit"
+          >
+            Войти
+          </button>
+
+          <button
+            id="registerButton"
+            class="secondary-button"
+            type="button"
+          >
+            Зарегистрироваться
+          </button>
+        </div>
+      </form>
+
+      <div id="userPanel" class="user-panel" hidden>
+        <div>
+          Вы вошли как:
+          <div id="userEmail" class="user-email"></div>
+        </div>
+
+        <button
+          id="logoutButton"
+          class="logout-button"
+          type="button"
+        >
+          Выйти
+        </button>
       </div>
-    </div>
 
-    <div class="field">
-      <span class="field-label">Добавление фотографий</span>
+      <div id="authStatus" class="status info">
+        Проверка авторизации…
+      </div>
+    </section>
 
-      <div class="file-buttons">
-        <label class="file-button" for="cameraInput">
-          Сделать фото
+    <section id="workspace" hidden>
+      <div class="field">
+        <label class="field-label" for="garageNumber">
+          Гаражный номер
         </label>
 
         <input
-          id="cameraInput"
-          type="file"
-          accept="image/*"
-          capture="environment"
+          id="garageNumber"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          autocomplete="off"
+          placeholder="000000"
         >
 
-        <label class="file-button" for="galleryInput">
-          Выбрать из галереи
-        </label>
-
-        <input
-          id="galleryInput"
-          type="file"
-          accept="image/*"
-          multiple
-        >
+        <div class="hint">
+          Необходимо ввести ровно 6 цифр. Например: 012345.
+        </div>
       </div>
 
-      <ul id="selectedFiles" class="selected-files">
-        <li class="empty-list">Фотографии ещё не выбраны.</li>
-      </ul>
+      <div class="field">
+        <span class="field-label">Добавление фотографий</span>
+
+        <div class="file-buttons">
+          <label
+            id="cameraLabel"
+            class="file-button"
+            for="cameraInput"
+          >
+            Сделать фото
+          </label>
+
+          <input
+            id="cameraInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+          >
+
+          <label
+            id="galleryLabel"
+            class="file-button"
+            for="galleryInput"
+          >
+            Выбрать из галереи
+          </label>
+
+          <input
+            id="galleryInput"
+            type="file"
+            accept="image/*"
+            multiple
+          >
+        </div>
+
+        <ul id="selectedFiles" class="selected-files">
+          <li class="empty-list">
+            Фотографии ещё не выбраны.
+          </li>
+        </ul>
+
+        <button
+          id="uploadButton"
+          class="primary-button"
+          type="button"
+          disabled
+        >
+          Загрузить фотографии
+        </button>
+      </div>
+
+      <div class="separator"></div>
 
       <button
-        id="uploadButton"
-        class="primary-button"
+        id="downloadButton"
+        class="zip-button"
         type="button"
         disabled
       >
-        Загрузить фотографии
+        Скачать все фото этого номера в ZIP
       </button>
-    </div>
 
-    <div class="separator"></div>
-
-    <button
-      id="downloadButton"
-      class="zip-button"
-      type="button"
-      disabled
-    >
-      Скачать все фото этого номера в ZIP
-    </button>
-
-    <div id="status" class="status info">
-      Подключение к хранилищу…
-    </div>
+      <div id="appStatus" class="status info">
+        Для работы с фотографиями выполните вход.
+      </div>
+    </section>
   </main>
 
   <script type="module">
@@ -296,7 +469,10 @@
 
     import {
       getAuth,
-      signInAnonymously
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
     import {
@@ -308,78 +484,293 @@
       getMetadata
     } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
-
-    /*
-      ВАЖНО:
-      замените значения ниже настройками вашего приложения Firebase.
-    */
     const firebaseConfig = {
-      apiKey: "ВСТАВЬТЕ_API_KEY",
-      authDomain: "ВСТАВЬТЕ_AUTH_DOMAIN",
-      projectId: "ВСТАВЬТЕ_PROJECT_ID",
-      storageBucket: "ВСТАВЬТЕ_STORAGE_BUCKET",
-      messagingSenderId: "ВСТАВЬТЕ_MESSAGING_SENDER_ID",
-      appId: "ВСТАВЬТЕ_APP_ID"
+      apiKey: "AIzaSyAOCbiLdZLTl89e02LIV1yPV7SH7Etc5oU",
+      authDomain: "foto-9e9ad.firebaseapp.com",
+      projectId: "foto-9e9ad",
+      storageBucket: "foto-9e9ad.firebasestorage.app",
+      messagingSenderId: "331591013787",
+      appId: "1:331591013787:web:564b7bc12ef77d30077d3e",
+      measurementId: "G-QT28JW6QL2"
     };
-
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const storage = getStorage(app);
 
+    const authForm = document.getElementById("authForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
+    const logoutButton = document.getElementById("logoutButton");
+    const userPanel = document.getElementById("userPanel");
+    const userEmail = document.getElementById("userEmail");
+    const authStatus = document.getElementById("authStatus");
+
+    const workspace = document.getElementById("workspace");
     const garageNumberInput =
       document.getElementById("garageNumber");
-
-    const cameraInput =
-      document.getElementById("cameraInput");
-
-    const galleryInput =
-      document.getElementById("galleryInput");
-
+    const cameraInput = document.getElementById("cameraInput");
+    const galleryInput = document.getElementById("galleryInput");
+    const cameraLabel = document.getElementById("cameraLabel");
+    const galleryLabel = document.getElementById("galleryLabel");
     const selectedFilesElement =
       document.getElementById("selectedFiles");
-
-    const uploadButton =
-      document.getElementById("uploadButton");
-
+    const uploadButton = document.getElementById("uploadButton");
     const downloadButton =
       document.getElementById("downloadButton");
+    const appStatus = document.getElementById("appStatus");
 
-    const statusElement =
-      document.getElementById("status");
-
+    let currentUser = null;
     let selectedFiles = [];
-    let firebaseReady = false;
     let operationInProgress = false;
+    let authOperationInProgress = false;
 
-
-    function setStatus(message, type = "info") {
-      statusElement.textContent = message;
-      statusElement.className = "status " + type;
+    function setAuthStatus(message, type = "info") {
+      authStatus.textContent = message;
+      authStatus.className = "status " + type;
     }
 
+    function setAppStatus(message, type = "info") {
+      appStatus.textContent = message;
+      appStatus.className = "status " + type;
+    }
+
+    function getAuthErrorMessage(error) {
+      const messages = {
+        "auth/email-already-in-use":
+          "Пользователь с такой электронной почтой уже зарегистрирован.",
+        "auth/invalid-email":
+          "Указан неправильный адрес электронной почты.",
+        "auth/weak-password":
+          "Пароль слишком простой. Используйте не менее 6 символов.",
+        "auth/invalid-credential":
+          "Неправильная электронная почта или пароль.",
+        "auth/user-not-found":
+          "Пользователь с такими данными не найден.",
+        "auth/wrong-password":
+          "Неправильная электронная почта или пароль.",
+        "auth/too-many-requests":
+          "Слишком много попыток входа. Попробуйте немного позже.",
+        "auth/network-request-failed":
+          "Ошибка подключения к интернету или Firebase.",
+        "auth/operation-not-allowed":
+          "Вход по электронной почте и паролю не включён в Firebase.",
+        "auth/unauthorized-domain":
+          "Домен сайта не добавлен в список разрешённых доменов Firebase."
+      };
+
+      return messages[error.code] ||
+        "Произошла ошибка Firebase. Код: " +
+        (error.code || error.message);
+    }
+
+    function getStorageErrorMessage(error) {
+      const messages = {
+        "storage/unauthorized":
+          "Нет доступа к Firebase Storage. Проверьте правила хранилища.",
+        "storage/object-not-found":
+          "Запрашиваемый файл не найден.",
+        "storage/retry-limit-exceeded":
+          "Не удалось выполнить операцию. Проверьте интернет-соединение.",
+        "storage/unknown":
+          "Firebase Storage вернул неизвестную ошибку."
+      };
+
+      return messages[error.code] ||
+        "Ошибка хранилища. Код: " +
+        (error.code || error.message);
+    }
+
+    function setAuthBusy(isBusy) {
+      authOperationInProgress = isBusy;
+      emailInput.disabled = isBusy;
+      passwordInput.disabled = isBusy;
+      loginButton.disabled = isBusy;
+      registerButton.disabled = isBusy;
+      updateControls();
+    }
 
     function updateControls() {
+      const available =
+        Boolean(currentUser) &&
+        !operationInProgress &&
+        !authOperationInProgress;
+
       uploadButton.disabled =
-        !firebaseReady ||
-        operationInProgress ||
-        selectedFiles.length === 0;
+        !available || selectedFiles.length === 0;
 
-      downloadButton.disabled =
-        !firebaseReady ||
-        operationInProgress;
+      downloadButton.disabled = !available;
+      cameraInput.disabled = !available;
+      galleryInput.disabled = !available;
+      garageNumberInput.disabled = !available;
+      logoutButton.disabled =
+        operationInProgress || authOperationInProgress;
 
-      cameraInput.disabled = operationInProgress;
-      galleryInput.disabled = operationInProgress;
-      garageNumberInput.disabled = operationInProgress;
+      cameraLabel.classList.toggle("disabled", !available);
+      galleryLabel.classList.toggle("disabled", !available);
     }
 
+    function getCredentials() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email) {
+        setAuthStatus(
+          "Введите адрес электронной почты.",
+          "error"
+        );
+        emailInput.focus();
+        return null;
+      }
+
+      if (password.length < 6) {
+        setAuthStatus(
+          "Пароль должен содержать не менее 6 символов.",
+          "error"
+        );
+        passwordInput.focus();
+        return null;
+      }
+
+      return {
+        email,
+        password
+      };
+    }
+
+    authForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const credentials = getCredentials();
+
+      if (!credentials) {
+        return;
+      }
+
+      setAuthBusy(true);
+
+      try {
+        setAuthStatus("Выполняется вход…", "info");
+
+        await signInWithEmailAndPassword(
+          auth,
+          credentials.email,
+          credentials.password
+        );
+
+        passwordInput.value = "";
+      } catch (error) {
+        console.error(error);
+        setAuthStatus(getAuthErrorMessage(error), "error");
+      } finally {
+        setAuthBusy(false);
+      }
+    });
+
+    registerButton.addEventListener("click", async () => {
+      const credentials = getCredentials();
+
+      if (!credentials) {
+        return;
+      }
+
+      setAuthBusy(true);
+
+      try {
+        setAuthStatus(
+          "Создание учётной записи…",
+          "info"
+        );
+
+        await createUserWithEmailAndPassword(
+          auth,
+          credentials.email,
+          credentials.password
+        );
+
+        passwordInput.value = "";
+
+        setAuthStatus(
+          "Регистрация завершена. Вы вошли в систему.",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        setAuthStatus(getAuthErrorMessage(error), "error");
+      } finally {
+        setAuthBusy(false);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      if (operationInProgress) {
+        return;
+      }
+
+      setAuthBusy(true);
+
+      try {
+        await signOut(auth);
+
+        setAuthStatus(
+          "Вы вышли из учётной записи.",
+          "info"
+        );
+      } catch (error) {
+        console.error(error);
+        setAuthStatus(getAuthErrorMessage(error), "error");
+      } finally {
+        setAuthBusy(false);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+
+      if (user) {
+        authForm.hidden = true;
+        userPanel.hidden = false;
+        workspace.hidden = false;
+
+        userEmail.textContent =
+          user.email || "Пользователь Firebase";
+
+        setAuthStatus(
+          "Авторизация выполнена успешно.",
+          "success"
+        );
+
+        setAppStatus(
+          "Сайт готов к загрузке и скачиванию фотографий.",
+          "success"
+        );
+      } else {
+        authForm.hidden = false;
+        userPanel.hidden = true;
+        workspace.hidden = true;
+        userEmail.textContent = "";
+
+        selectedFiles = [];
+        showSelectedFiles();
+
+        if (!authOperationInProgress) {
+          setAuthStatus(
+            "Введите данные для входа или зарегистрируйтесь.",
+            "info"
+          );
+        }
+      }
+
+      updateControls();
+    });
 
     function getGarageNumber() {
       const garageNumber = garageNumberInput.value.trim();
 
       if (!/^[0-9]{6}$/.test(garageNumber)) {
-        setStatus(
+        setAppStatus(
           "Введите гаражный номер, состоящий ровно из 6 цифр.",
           "error"
         );
@@ -390,7 +781,6 @@
 
       return garageNumber;
     }
-
 
     function formatFileSize(bytes) {
       if (bytes < 1024) {
@@ -403,7 +793,6 @@
 
       return (bytes / 1024 / 1024).toFixed(1) + " МБ";
     }
-
 
     function showSelectedFiles() {
       selectedFilesElement.innerHTML = "";
@@ -433,7 +822,6 @@
       updateControls();
     }
 
-
     function addFiles(fileList) {
       const maximumFileSize = 20 * 1024 * 1024;
       const newFiles = Array.from(fileList);
@@ -453,18 +841,19 @@
       showSelectedFiles();
 
       if (rejectedFiles > 0) {
-        setStatus(
-          "Некоторые файлы не добавлены. Разрешены только изображения до 20 МБ.",
+        setAppStatus(
+          "Некоторые файлы не добавлены. Разрешены изображения размером до 20 МБ.",
           "error"
         );
       } else if (newFiles.length > 0) {
-        setStatus(
-          "Выбрано фотографий: " + selectedFiles.length + ".",
+        setAppStatus(
+          "Выбрано фотографий: " +
+          selectedFiles.length +
+          ".",
           "info"
         );
       }
     }
-
 
     function getFileExtension(file) {
       const parts = file.name.split(".");
@@ -489,29 +878,34 @@
         return "webp";
       }
 
-      if (file.type === "image/heic") {
+      if (
+        file.type === "image/heic" ||
+        file.type === "image/heif"
+      ) {
         return "heic";
       }
 
       return "jpg";
     }
 
-
     function createUniqueFileName(file) {
       const extension = getFileExtension(file);
+
       const uniquePart =
         typeof crypto.randomUUID === "function"
           ? crypto.randomUUID()
           : Math.random().toString(36).slice(2);
 
-      return Date.now() + "_" + uniquePart + "." + extension;
+      return Date.now() +
+        "_" +
+        uniquePart +
+        "." +
+        extension;
     }
-
 
     function cleanArchiveFileName(fileName) {
       return fileName.replace(/[\\/:*?"<>|]/g, "_");
     }
-
 
     garageNumberInput.addEventListener("input", () => {
       garageNumberInput.value = garageNumberInput.value
@@ -519,20 +913,25 @@
         .slice(0, 6);
     });
 
-
     cameraInput.addEventListener("change", () => {
       addFiles(cameraInput.files);
       cameraInput.value = "";
     });
-
 
     galleryInput.addEventListener("change", () => {
       addFiles(galleryInput.files);
       galleryInput.value = "";
     });
 
-
     uploadButton.addEventListener("click", async () => {
+      if (!currentUser) {
+        setAppStatus(
+          "Для загрузки фотографий необходимо войти.",
+          "error"
+        );
+        return;
+      }
+
       const garageNumber = getGarageNumber();
 
       if (!garageNumber) {
@@ -540,7 +939,7 @@
       }
 
       if (selectedFiles.length === 0) {
-        setStatus(
+        setAppStatus(
           "Сначала сделайте фото или выберите фотографии.",
           "error"
         );
@@ -564,17 +963,17 @@
           const fileReference = ref(
             storage,
             "garage/" +
-              garageNumber +
-              "/" +
-              uniqueFileName
+            garageNumber +
+            "/" +
+            uniqueFileName
           );
 
-          setStatus(
+          setAppStatus(
             "Загрузка фотографии " +
-              (index + 1) +
-              " из " +
-              filesForUpload.length +
-              "…",
+            (index + 1) +
+            " из " +
+            filesForUpload.length +
+            "…",
             "info"
           );
 
@@ -582,7 +981,9 @@
             contentType: file.type,
             customMetadata: {
               garageNumber: garageNumber,
-              originalName: file.name
+              originalName: file.name,
+              uploadedByUid: currentUser.uid,
+              uploadedByEmail: currentUser.email || ""
             }
           });
         }
@@ -590,18 +991,16 @@
         selectedFiles = [];
         showSelectedFiles();
 
-        setStatus(
+        setAppStatus(
           "Все фотографии успешно загружены. Гаражный номер: " +
-            garageNumber +
-            ".",
+          garageNumber +
+          ".",
           "success"
         );
       } catch (error) {
         console.error(error);
-
-        setStatus(
-          "Не удалось загрузить фотографии. Проверьте настройки Firebase Storage и правила доступа. Код: " +
-            (error.code || error.message),
+        setAppStatus(
+          getStorageErrorMessage(error),
           "error"
         );
       } finally {
@@ -610,8 +1009,15 @@
       }
     });
 
-
     downloadButton.addEventListener("click", async () => {
+      if (!currentUser) {
+        setAppStatus(
+          "Для скачивания фотографий необходимо войти.",
+          "error"
+        );
+        return;
+      }
+
       const garageNumber = getGarageNumber();
 
       if (!garageNumber) {
@@ -622,10 +1028,10 @@
       updateControls();
 
       try {
-        setStatus(
+        setAppStatus(
           "Поиск фотографий для номера " +
-            garageNumber +
-            "…",
+          garageNumber +
+          "…",
           "info"
         );
 
@@ -637,43 +1043,55 @@
         const result = await listAll(folderReference);
 
         if (result.items.length === 0) {
-          setStatus(
+          setAppStatus(
             "Для гаражного номера " +
-              garageNumber +
-              " фотографии не найдены.",
+            garageNumber +
+            " фотографии не найдены.",
             "error"
           );
           return;
         }
 
+        if (typeof JSZip === "undefined") {
+          throw new Error(
+            "Не удалось загрузить библиотеку создания ZIP."
+          );
+        }
+
         const zip = new JSZip();
+        const sortedItems = [...result.items].sort(
+          (first, second) =>
+            first.name.localeCompare(second.name)
+        );
 
         for (
           let index = 0;
-          index < result.items.length;
+          index < sortedItems.length;
           index++
         ) {
-          const fileReference = result.items[index];
+          const fileReference = sortedItems[index];
 
-          setStatus(
+          setAppStatus(
             "Подготовка файла " +
-              (index + 1) +
-              " из " +
-              result.items.length +
-              "…",
+            (index + 1) +
+            " из " +
+            sortedItems.length +
+            "…",
             "info"
           );
 
-          const [downloadUrl, metadata] = await Promise.all([
-            getDownloadURL(fileReference),
-            getMetadata(fileReference)
-          ]);
+          const [downloadUrl, metadata] =
+            await Promise.all([
+              getDownloadURL(fileReference),
+              getMetadata(fileReference)
+            ]);
 
           const response = await fetch(downloadUrl);
 
           if (!response.ok) {
             throw new Error(
-              "Не удалось скачать файл " + fileReference.name
+              "Не удалось скачать файл " +
+              fileReference.name
             );
           }
 
@@ -691,7 +1109,7 @@
           zip.file(archiveFileName, fileBlob);
         }
 
-        setStatus(
+        setAppStatus(
           "Создание ZIP-архива…",
           "info"
         );
@@ -705,10 +1123,10 @@
             }
           },
           (progress) => {
-            setStatus(
+            setAppStatus(
               "Создание ZIP-архива: " +
-                Math.round(progress.percent) +
-                "%",
+              Math.round(progress.percent) +
+              "%",
               "info"
             );
           }
@@ -720,7 +1138,9 @@
         const link = document.createElement("a");
         link.href = temporaryUrl;
         link.download =
-          "garage-" + garageNumber + "-photos.zip";
+          "garage-" +
+          garageNumber +
+          "-photos.zip";
 
         document.body.appendChild(link);
         link.click();
@@ -730,18 +1150,21 @@
           URL.revokeObjectURL(temporaryUrl);
         }, 1000);
 
-        setStatus(
+        setAppStatus(
           "Архив подготовлен. Фотографий: " +
-            result.items.length +
-            ".",
+          sortedItems.length +
+          ".",
           "success"
         );
       } catch (error) {
         console.error(error);
 
-        setStatus(
-          "Не удалось создать ZIP-архив. Проверьте подключение и правила Firebase. Код: " +
-            (error.code || error.message),
+        const message = error.code
+          ? getStorageErrorMessage(error)
+          : error.message;
+
+        setAppStatus(
+          "Не удалось создать ZIP-архив. " + message,
           "error"
         );
       } finally {
@@ -750,31 +1173,8 @@
       }
     });
 
-
-    async function startApplication() {
-      try {
-        await signInAnonymously(auth);
-
-        firebaseReady = true;
-        updateControls();
-
-        setStatus(
-          "Сайт готов к работе.",
-          "success"
-        );
-      } catch (error) {
-        console.error(error);
-
-        setStatus(
-          "Не удалось подключиться к Firebase. Проверьте firebaseConfig, Anonymous Authentication и разрешённый домен. Код: " +
-            (error.code || error.message),
-          "error"
-        );
-      }
-    }
-
-
-    startApplication();
+    showSelectedFiles();
+    updateControls();
   </script>
 </body>
 </html>
